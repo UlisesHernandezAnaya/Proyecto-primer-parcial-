@@ -1,0 +1,42 @@
+-- Script optimizado para importar datos reducidos de población del INEGI
+
+DROP DATABASE IF EXISTS poblacion_mexico_reducida;
+CREATE DATABASE poblacion_mexico_reducida;
+USE poblacion_mexico_reducida;
+
+CREATE TABLE poblacion_inegi_reducida (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entidad INT,
+    entidad_nombre VARCHAR(100),
+    municipio INT,
+    municipio_nombre VARCHAR(100),
+    localidad INT,
+    localidad_nombre VARCHAR(255),
+    longitud FLOAT,
+    latitud FLOAT,
+    poblacion_total INT,
+    poblacion_masculina INT,
+    poblacion_femenina INT
+);
+
+-- Índices para mejorar el rendimiento
+CREATE INDEX idx_entidad ON poblacion_inegi_reducida(entidad);
+CREATE INDEX idx_municipio ON poblacion_inegi_reducida(municipio);
+CREATE INDEX idx_poblacion ON poblacion_inegi_reducida(poblacion_total);
+CREATE INDEX idx_coordenadas ON poblacion_inegi_reducida(latitud, longitud);
+
+-- Tabla de resumen por municipio
+CREATE TABLE municipios_resumen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entidad INT,
+    entidad_nombre VARCHAR(100),
+    municipio INT,
+    municipio_nombre VARCHAR(100),
+    longitud FLOAT,
+    latitud FLOAT,
+    poblacion_total INT,
+    poblacion_masculina INT,
+    poblacion_femenina INT
+);
+
+
